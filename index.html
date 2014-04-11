@@ -2,23 +2,21 @@
 	<head>
 		<title>Gravity</title>
 		<script type="text/javascript">
-		function deg2rad(x) {
-			return x / 180 * Math.PI;
-		}
-
 		function Ship(x, y) {
 			this.posX = x;
 			this.posY = y;
 
-			this.acclY = 0;
-			this.speeY = 0;
-			this.gravY = -9.81;
-			this.engine = 0;
+			this.acclY  = 0;
+			this.speeY  = 0;
+			this.acclX  = 0;
+			this.speeX  = 0;
 
-			this.acclX = 0;
-			this.speeX = 0;
-
+			this.engine   = 0;
 			this.rotation = 0;
+			this.step     = Math.PI / 50;
+
+			this.gravity = 9.81;
+			this.scale   = 0.05;
 		}
 
 		Ship.prototype.drawX = function() {
@@ -29,50 +27,37 @@
 			return this.posY * 6;
 		}
 
-		Ship.prototype.drawRotation = function() {
-			return this.rotation * Math.PI / 180;
-		}
-
 		Ship.prototype.update = function() {
 			if ( this.rotation != 0 ) {
-				if ( this.rotation > 0 ) {
-					var sinEngine = this.engine / Math.sin(deg2rad(90));
-					this.acclX = sinEngine * Math.sin(deg2rad(this.rotation)) * -1;
-					this.acclY = sinEngine * Math.sin(deg2rad(90-this.rotation));
-				} else {
-					var sinEngine = this.engine / Math.sin(deg2rad(90));
-					this.acclX = sinEngine * Math.sin(deg2rad(this.rotation*-1));
-					this.acclY = sinEngine * Math.sin(deg2rad(90-this.rotation*-1));
-				}
+				this.acclY = this.engine * Math.cos(this.rotation);
+				this.acclX = this.engine * Math.sin(this.rotation);
 			} else {
 				this.acclY = this.engine;
 				this.acclX = 0;
 			}
 
-			this.speeY = this.speeY - ( this.gravY + this.acclY ) * 0.05;
-			this.speeX = this.speeX - this.acclX * 0.05;
-
-			this.posY  = this.speeY * 0.05 + this.posY;
-			this.posX  = this.speeX * 0.05 + this.posX;
+			this.speeY = this.speeY - ( this.acclY - this.gravity ) * this.scale;
+			this.speeX = this.speeX + ( this.acclX                ) * this.scale;
+			this.posY  = this.posY  + ( this.speeY                ) * this.scale;
+			this.posX  = this.posX  + ( this.speeX                ) * this.scale;
 
 			if ( this.posY > 80 ) {
-				this.posY   = 80;
-				this.speedY = 0;
-				this.gravY  = 0;
-				this.acclY  = 0;
-				this.speeX  = 0;
-				this.acclX  = 0;
+				this.posY     = 80;
+				this.speedY   = 0;
+				this.gravity  = 0;
+				this.acclY    = 0;
+				this.speeX    = 0;
+				this.acclX    = 0;
 			} else {
-				this.gravY  = -9.81;
+				this.gravity  = 9.81;
 			}
-
 		}
 
 		Ship.prototype.draw = function(ctx) {
 			ctx.save();
 				ctx.translate(this.drawX(), this.drawY());
 
-				ctx.rotate(this.drawRotation());
+				ctx.rotate(this.rotation);
 
 				ctx.drawImage(img, -16, -16);
 
@@ -96,11 +81,11 @@
 			}
 
 			if ( e.keyCode == 65 ) { // A
-				obj.rotation = obj.rotation - 5;
+				obj.rotation = obj.rotation - obj.step;
 			}
 
 			if ( e.keyCode == 68 ) { // D
-				obj.rotation = obj.rotation + 5;
+				obj.rotation = obj.rotation + obj.step;
 			}
 		}
 
