@@ -17,11 +17,11 @@ function Ship(x, y) {
 
 Ship.prototype.drawX = function() {
 	return this.posX * 6;
-}
+};
 
 Ship.prototype.drawY = function() {
 	return this.posY * 6;
-}
+};
 
 Ship.prototype.update = function() {
 	if ( this.rotation != 0 ) {
@@ -47,20 +47,4 @@ Ship.prototype.update = function() {
 	} else {
 		this.gravity  = 9.81;
 	}
-}
-
-Ship.prototype.draw = function(ctx) {
-	ctx.save();
-		ctx.translate(this.drawX(), this.drawY());
-
-		ctx.rotate(this.rotation);
-
-		ctx.drawImage(landerImage, -16, -16);
-
-		ctx.fillRect(-3, 18, 6, this.engine); 
-	ctx.restore();
-}
-
-Ship.prototype.clear = function(ctx) {
-	ctx.clearRect(this.drawX()-40, this.drawY()-40, 80, 80);
-}
+};

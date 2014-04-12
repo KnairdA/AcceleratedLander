@@ -1,13 +1,31 @@
 <html>
 	<head>
-		<title>Gravity</title>
+		<title>AcceleratedLander</title>
 
 		<style type="text/css">
 		canvas { border: 1px solid black; }
 		</style>
 
 		<script type="text/javascript" src="src/ship.js"></script>
-		<script type="text/javascript" src="src/interface.js"></script>
+		<script type="text/javascript" src="src/scene.js"></script>
+		<script type="text/javascript" src="src/control.js"></script>
+		<script type="text/javascript">
+			var scene;
+			var control;
+
+			function init() {
+				scene = new Scene(
+					document.getElementById('canvas').getContext('2d'),
+					new Ship(41, 10)
+				);
+
+				control = new Control(scene);
+
+				setInterval(function() {
+					scene.update();
+				}, 50);
+			}
+		</script>
 	</head>
 
 	<body onload="init();">
