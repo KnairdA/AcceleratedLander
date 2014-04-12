@@ -15,21 +15,15 @@ function Control(scene) {
 }
 
 Control.prototype.keyDown = function(ev) {
-	if ( ev.keyCode == 83 ) { // S
-		this.scene.lander.engine = 20;
-	}
-
-	if ( ev.keyCode == 65 ) { // A
-		this.scene.lander.rotation = this.scene.lander.rotation - this.scene.lander.step;
-	}
-
-	if ( ev.keyCode == 68 ) { // D
-		this.scene.lander.rotation = this.scene.lander.rotation + this.scene.lander.step;
+	switch ( ev.keyCode ) {
+		case 83: this.scene.lander.power(20);   break; // S
+		case 65: this.scene.lander.turnLeft();  break; // A
+		case 68: this.scene.lander.turnRight(); break; // D
 	}
 }
 
 Control.prototype.keyUp = function(ev) {
-	if ( ev.keyCode == 83 ) { // S
-		this.scene.lander.engine = 0;
+	switch ( ev.keyCode ) {
+		case 83: this.scene.lander.power(0); break; // S
 	}
 }

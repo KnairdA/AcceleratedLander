@@ -15,14 +15,6 @@ function Ship(x, y) {
 	this.scale   = 0.05;
 }
 
-Ship.prototype.drawX = function() {
-	return this.posX * 6;
-};
-
-Ship.prototype.drawY = function() {
-	return this.posY * 6;
-};
-
 Ship.prototype.update = function() {
 	if ( this.rotation != 0 ) {
 		this.acclY = this.engine * Math.cos(this.rotation);
@@ -48,3 +40,15 @@ Ship.prototype.update = function() {
 		this.gravity  = 9.81;
 	}
 };
+
+Ship.prototype.turnLeft = function() {
+	this.rotation = this.rotation - this.step;
+}
+
+Ship.prototype.turnRight = function() {
+	this.rotation = this.rotation + this.step;
+}
+
+Ship.prototype.power = function(value) {
+	this.engine = value;
+}
