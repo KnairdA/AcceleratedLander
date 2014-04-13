@@ -16,14 +16,14 @@
 			function init() {
 				scene = new Scene(
 					document.getElementById('canvas').getContext('2d'),
-					new Ship(41, 10)
+					new Ship(50, 10)
 				);
 
 				control = new Control(scene);
 
 				setInterval(function() {
 					scene.update();
-				}, 50);
+				}, 1000 / scene.rate);
 			}
 		</script>
 	</head>

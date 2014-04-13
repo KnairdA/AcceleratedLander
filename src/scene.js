@@ -1,7 +1,8 @@
 function Scene(ctx, ship) {
 	this.canvas           = ctx;
 	this.canvas.fillStyle = "rgb(200,0,0)";
-	this.scale            = 6;
+	this.scale            = 5;
+	this.rate             = 20;
 	this.lander           = ship;
 	this.landerImage      = new Image();
 	this.landerImage.src  = 'ressource/ship.png';
@@ -33,7 +34,7 @@ Scene.prototype.draw = function() {
 
 Scene.prototype.update = function() {
 	this.clear();
-	this.lander.update();
+	this.lander.update(this.rate);
 	this.draw();
 }
 
