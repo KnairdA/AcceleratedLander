@@ -1,39 +1,48 @@
-function Scene(ctx, ship) {
-	this.canvas           = ctx;
-	this.canvas.fillStyle = "rgb(200,0,0)";
-	this.scale            = 5;
-	this.rate             = 20;
-	this.lander           = ship;
-	this.landerImage      = new Image();
-	this.landerImage.src  = 'ressource/ship.png';
-}
-
-Scene.prototype.clear = function() {
-	this.canvas.clearRect(
-		this.lander.posX * this.scale - 40,
-		this.lander.posY * this.scale - 40,
-		80,
-		80
-	);
+function Scene(canvas, ship) {
+	this.canvas            = canvas;
+	this.context           = canvas.getContext('2d');
+	this.context.fillStyle = "rgb(200,0,0)";
+	this.scale             = 5;
+	this.rate              = 20;
+	this.lander            = ship;
+	this.landerImage       = new Image();
+	this.landerImage.src   = 'ressource/ship.png';
 }
 
 Scene.prototype.draw = function() {
-	this.canvas.save();
+	this.context.save();
 
-	this.canvas.translate(
+	this.context.clearRect(
+		0,
+		0,
+		this.canvas.width,
+		this.canvas.height
+	);
+
+	this.context.translate(
 		this.lander.posX * this.scale,
 		this.lander.posY * this.scale
 	);
 
-	this.canvas.rotate(this.lander.rotation);
-	this.canvas.drawImage(this.landerImage, -16, -16);
-	this.canvas.fillRect(-3, 18, 6, this.lander.engine); 
+	this.context.rotate(this.lander.rotation);
 
-	this.canvas.restore();
+	this.context.drawImage(
+		this.landerImage,
+		this.landerImage.width  / -2,
+		this.landerImage.height / -2
+	);
+
+	this.context.fillRect(
+		-3,
+		18,
+		6,
+		this.lander.engine
+	); 
+
+	this.context.restore();
 }
 
 Scene.prototype.update = function() {
-	this.clear();
 	this.lander.update(this.rate);
 	this.draw();
 }

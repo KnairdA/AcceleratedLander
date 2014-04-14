@@ -14,21 +14,16 @@ function Ship(x, y) {
 }
 
 Ship.prototype.update = function(rate) {
+	if ( this.posY > 95 ) {
+		this.speeX = 0;
+		this.speeY = 0;
+		this.posY  = 95;
+	}
+
 	this.speeY = this.speeY - ( this.acclY - this.gravity ) / rate;
 	this.speeX = this.speeX + ( this.acclX                ) / rate;
 	this.posY  = this.posY  + ( this.speeY                ) / rate;
 	this.posX  = this.posX  + ( this.speeX                ) / rate;
-
-	if ( this.posY > 95 ) {
-		this.posY     = 95;
-		this.speedY   = 0;
-		this.gravity  = 0;
-		this.acclY    = 0;
-		this.speeX    = 0;
-		this.acclX    = 0;
-	} else {
-		this.gravity  = 10;
-	}
 };
 
 Ship.prototype.resolveAcceleration = function() {
