@@ -3,7 +3,8 @@
 		<title>AcceleratedLander</title>
 
 		<style type="text/css">
-		canvas { border: 1px solid black; }
+		#layers { position: relative; }
+		#layers canvas { position: absolute; top: 0; left: 0; border: 1px solid black; }
 		</style>
 
 		<script type="text/javascript" src="src/ship.js"></script>
@@ -15,7 +16,8 @@
 
 			function init() {
 				scene = new Scene(
-					document.getElementById('canvas'),
+					document.getElementById('canvas_lander'),
+					document.getElementById('canvas_ui'),
 					new Ship(50, 10)
 				);
 
@@ -29,6 +31,9 @@
 	</head>
 
 	<body onload="init();">
-		<canvas id="canvas" width="500" height="500"></canvas>
+		<div id="layers">
+			<canvas id="canvas_lander" width="900" height="900"></canvas>
+			<canvas id="canvas_ui"     width="900" height="900"></canvas>
+		</div>
 	</body>
 </html>

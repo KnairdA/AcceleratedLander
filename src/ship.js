@@ -14,10 +14,10 @@ function Ship(x, y) {
 }
 
 Ship.prototype.update = function(rate) {
-	if ( this.posY > 95 ) {
+	if ( this.posY > 175 ) {
 		this.speeX = 0;
 		this.speeY = 0;
-		this.posY  = 95;
+		this.posY  = 175;
 	}
 
 	this.speeY = this.speeY - ( this.acclY - this.gravity ) / rate;
